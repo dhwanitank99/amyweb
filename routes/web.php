@@ -1,0 +1,64 @@
+<?php
+//Frontend routes
+Route::get('/','HomeController@index')->name('dashboard');
+Route::get('/about-us','AboutController@index')->name('about');
+Route::get('/service','ServiceController@index')->name('service');
+Route::get('/employer','EmployerController@index')->name('employer');
+Route::get('/candidate-connect','CandidateConnectController@index')->name('candidate-connect');
+Route::post('/candidate-connect/upload-application','CandidateConnectController@saveJobApplication')->name('candidate-connect-application');
+Route::get('/event','EventController@index')->name('event');
+Route::get('/client','ClientController@index')->name('client');
+Route::get('/contact','ContactController@index')->name('contact'); 
+Route::get('/positive-energy','PositiveController@index')->name('positive-energy');
+
+//Admin Routes
+Route::get('/login', 'Admin\LoginController@index')->name('admin-login');
+Route::post('/login', 'Admin\LoginController@doLogin')->name('admin-do-login');
+Route::group(['middleware'=>'auth:admin'], function (){
+    Route::get('/admin', 'Admin\DashboardController@index')->name('admin-dashboard');
+    Route::get('/admin/jobs', 'Admin\JobController@index')->name('admin-jobs');
+    Route::get('/admin/job/create', 'Admin\JobController@create')->name('admin-new-job');
+    Route::post('/admin/job/create', 'Admin\JobController@store')->name('admin-save-job');
+    Route::get('/admin/job/{id}/edit', 'Admin\JobController@edit')->name('admin-edit-job');
+    Route::post('/admin/job/{id}/edit', 'Admin\JobController@update')->name('admin-update-job');
+    Route::get('/admin/job/{id}/view', 'Admin\JobController@show')->name('admin-view-job');
+    Route::get('/admin/pages', 'Admin\PageController@index')->name('admin-pages');
+    Route::get('/admin/page/create', 'Admin\PageController@create')->name('admin-new-page');
+    Route::post('/admin/page/create', 'Admin\PageController@store')->name('admin-save-page');
+    Route::get('/admin/page/{id}/edit', 'Admin\PageController@edit')->name('admin-edit-page');
+    Route::post('/admin/page/{id}/edit', 'Admin\PageController@update')->name('admin-update-page');
+    Route::get('/admin/categories', 'Admin\CategoryController@index')->name('admin-categories');
+    Route::get('/admin/category/create', 'Admin\CategoryController@create')->name('admin-new-category');
+    Route::post('/admin/category/create', 'Admin\CategoryController@store')->name('admin-save-category');
+    Route::get('/admin/category/{id}/edit', 'Admin\CategoryController@edit')->name('admin-edit-category');
+    Route::post('/admin/category/{id}/edit', 'Admin\CategoryController@update')->name('admin-update-category');
+    Route::get('/admin/custom-post-types', 'Admin\CustomPostTypeController@index')->name('admin-custom-post-types');
+    Route::get('/admin/custom-post-type/create', 'Admin\CustomPostTypeController@create')->name('admin-new-custom-post-type');
+    Route::post('/admin/custom-post-type/create', 'Admin\CustomPostTypeController@store')->name('admin-save-custom-post-type');
+    Route::get('/admin/custom-post-type/{id}/edit', 'Admin\CustomPostTypeController@edit')->name('admin-edit-custom-post-type');
+    Route::post('/admin/custom-post-type/{id}/edit', 'Admin\CustomPostTypeController@update')->name('admin-update-custom-post-type');
+    Route::get('/admin/custom-post/{slug}', 'Admin\CustomPostController@index')->name('admin-custom-post');
+    Route::get('/admin/custom-post/{slug}/create', 'Admin\CustomPostController@create')->name('admin-new-custom-post');
+    Route::post('/admin/custom-post/{slug}/create', 'Admin\CustomPostController@store')->name('admin-save-custom-post');
+    Route::get('/admin/custom-post/{slug}/lists', 'Admin\CustomPostController@index')->name('admin-custom-posts');
+    Route::get('/admin/custom-post/{slug}/{id}/edit', 'Admin\CustomPostController@edit')->name('admin-edit-custom-post');
+    Route::post('/admin/custom-post/{slug}/{id}/edit', 'Admin\CustomPostController@update')->name('admin-update-custom-post');
+    Route::get('/admin/block/create', 'Admin\BlockController@create')->name('admin-new-block');
+    Route::post('/admin/block/create', 'Admin\BlockController@store')->name('admin-save-block');
+    Route::get('/admin/blocks', 'Admin\BlockController@index')->name('admin-blocks');
+    Route::get('/admin/block/{id}/edit', 'Admin\BlockController@edit')->name('admin-edit-block');
+    Route::post('/admin/block/{id}/edit', 'Admin\BlockController@update')->name('admin-update-block');
+    Route::get('/admin/sliders', 'Admin\BannerController@index')->name('admin-banners');
+    Route::get('/admin/slider/create', 'Admin\BannerController@create')->name('admin-new-banner');
+    Route::post('/admin/slider/create', 'Admin\BannerController@store')->name('admin-save-banner');
+    Route::get('/admin/slider/{id}/edit', 'Admin\BannerController@edit')->name('admin-edit-banner');
+    Route::post('/admin/slider/{id}/edit', 'Admin\BannerController@update')->name('admin-update-banner');
+    Route::get('/admin/general/settings', 'Admin\GeneralController@index')->name('admin-settings');
+    Route::post('/admin/general/settings', 'Admin\GeneralController@store')->name('admin-save-settings');
+    Route::get('/admin/logout', 'Admin\LoginController@logout')->name('admin-logout');
+    Route::get('/admin/posts', 'Admin\PostController@index')->name('admin-posts');
+    Route::get('/admin/post/create', 'Admin\PostController@create')->name('admin-new-post');
+    Route::post('/admin/post/create', 'Admin\PostController@store')->name('admin-save-post');
+    Route::get('/admin/post/{id}/edit', 'Admin\PostController@edit')->name('admin-edit-post');
+    Route::post('/admin/post/{id}/edit', 'Admin\PostController@update')->name('admin-update-post');
+});
